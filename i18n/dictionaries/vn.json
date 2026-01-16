@@ -1,0 +1,53 @@
+{
+  "nav": {
+    "home": "Trang Chủ",
+    "about": "Giới Thiệu",
+    "services": "Dịch Vụ",
+    "portfolio": "Dự Án",
+    "blog": "Blog",
+    "contact": "Liên Hệ"
+  },
+  "common": {
+    "readMore": "Đọc Thêm",
+    "learnMore": "Tìm Hiểu Thêm",
+    "getStarted": "Bắt Đầu",
+    "contactUs": "Liên Hệ",
+    "viewAll": "Xem Tất Cả",
+    "backToHome": "Về Trang Chủ"
+  },
+  "home": {
+    "hero": {
+      "title": "Trao Quyền Cho Doanh Nghiệp Của Bạn Với Giải Pháp IT & Marketing",
+      "subtitle": "Chúng tôi cung cấp dịch vụ phát triển IT và marketing kỹ thuật số toàn diện để giúp doanh nghiệp của bạn phát triển và thành công trong thời đại số.",
+      "cta": "Bắt Đầu Ngay Hôm Nay"
+    },
+    "services": {
+      "title": "Dịch Vụ Của Chúng Tôi",
+      "subtitle": "Giải pháp toàn diện cho nhu cầu doanh nghiệp của bạn"
+    },
+    "testimonials": {
+      "title": "Khách Hàng Nói Gì Về Chúng Tôi",
+      "subtitle": "Được tin tưởng bởi các doanh nghiệp trên toàn thế giới"
+    }
+  },
+  "contact": {
+    "title": "Liên Hệ",
+    "subtitle": "Có dự án trong đầu? Hãy nói chuyện với chúng tôi",
+    "form": {
+      "name": "Họ Tên",
+      "email": "Địa Chỉ Email",
+      "phone": "Số Điện Thoại",
+      "company": "Tên Công Ty",
+      "message": "Tin Nhắn",
+      "submit": "Gửi Tin Nhắn",
+      "sending": "Đang gửi...",
+      "success": "Tin nhắn đã được gửi! Chúng tôi sẽ phản hồi sớm.",
+      "error": "Không thể gửi tin nhắn. Vui lòng thử lại."
+    }
+  },
+  "footer": {
+    "tagline": "Đối tác tin cậy của bạn cho các giải pháp IT và Marketing",
+    "rights": "Tất cả quyền được bảo lưu."
+  }
+}
+

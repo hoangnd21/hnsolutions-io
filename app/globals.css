@@ -1,0 +1,374 @@
+@import "tailwindcss";
+
+/* Font Variables - Configured in layout.tsx */
+:root {
+  --font-inter: 'Inter', sans-serif;
+  --font-poppins: 'Poppins', sans-serif;
+  --font-space-grotesk: 'Space Grotesk', sans-serif;
+  --font-heading: var(--font-poppins);
+}
+
+/* Vietnamese Text Optimization */
+* {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Improve diacritical mark rendering */
+body,
+p,
+span,
+div,
+a,
+li {
+  font-variant-ligatures: common-ligatures;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "dlig" 1;
+}
+
+/* Theme Colors - Light Mode (kept for compatibility) */
+:root {
+  /* Primary - Bright Cyan/Blue */
+  --color-primary-50: #e0f7ff;
+  --color-primary-100: #b3ebff;
+  --color-primary-200: #80deff;
+  --color-primary-300: #4dd0ff;
+  --color-primary-400: #1ac5ff;
+  --color-primary-500: #00b8ff;
+  --color-primary-600: #00a8e6;
+  --color-primary-700: #0094cc;
+  --color-primary-800: #0080b3;
+  --color-primary-900: #005c8a;
+  
+  /* Secondary - Magenta/Pink */
+  --color-secondary-50: #ffe0f7;
+  --color-secondary-100: #ffb3e6;
+  --color-secondary-200: #ff80d4;
+  --color-secondary-300: #ff4dc2;
+  --color-secondary-400: #ff1ab0;
+  --color-secondary-500: #ff009e;
+  --color-secondary-600: #e6008c;
+  --color-secondary-700: #cc007a;
+  --color-secondary-800: #b30068;
+  --color-secondary-900: #8a004d;
+  
+  /* Neutral/Background */
+  --color-background: #ffffff;
+  --color-foreground: #171717;
+  --color-muted: #f5f5f5;
+  --color-muted-foreground: #737373;
+  --color-border: #e5e5e5;
+  --color-card: #ffffff;
+  --color-card-foreground: #171717;
+  
+  /* Header Links */
+  --header-link-color: #171717;
+}
+
+/* Theme Colors - Blacked-Out Dark Mode */
+.dark {
+  /* Primary - Bright Cyan */
+  --color-primary-50: #e0f7ff;
+  --color-primary-100: #b3ebff;
+  --color-primary-200: #80deff;
+  --color-primary-300: #4dd0ff;
+  --color-primary-400: #1ac5ff;
+  --color-primary-500: #00f0ff;
+  --color-primary-600: #00d9ff;
+  --color-primary-700: #00b8e6;
+  --color-primary-800: #0094cc;
+  --color-primary-900: #006699;
+  
+  /* Secondary - Magenta/Pink */
+  --color-secondary-50: #ffe0f7;
+  --color-secondary-100: #ffb3e6;
+  --color-secondary-200: #ff80d4;
+  --color-secondary-300: #ff4dc2;
+  --color-secondary-400: #ff1ab0;
+  --color-secondary-500: #ff00ff;
+  --color-secondary-600: #ff0080;
+  --color-secondary-700: #e60073;
+  --color-secondary-800: #cc0066;
+  --color-secondary-900: #99004d;
+  
+  /* Neutral/Background - Blacked Out */
+  --color-dark: #051118;
+  --color-background: var(--color-dark);
+  --color-foreground: #e5e5e5;
+  --color-muted: #0f0f0f;
+  --color-muted-foreground: #a3a3a3;
+  --color-border: #404040;
+  --color-card: #0f0f0f;
+  --color-card-foreground: #e5e5e5;
+  
+  /* Header Links */
+  --header-link-color: #ffffff;
+}
+
+/* Tailwind Theme Configuration */
+@theme inline {
+  /* Colors */
+  --color-dark: var(--color-dark);
+  --color-background: var(--color-background);
+  --color-foreground: var(--color-foreground);
+  --color-muted: var(--color-muted);
+  --color-muted-foreground: var(--color-muted-foreground);
+  --color-border: var(--color-border);
+  --color-card: var(--color-card);
+  --color-card-foreground: var(--color-card-foreground);
+  --color-header-link: var(--header-link-color);
+  
+  /* Primary Colors */
+  --color-primary-50: var(--color-primary-50);
+  --color-primary-100: var(--color-primary-100);
+  --color-primary-200: var(--color-primary-200);
+  --color-primary-300: var(--color-primary-300);
+  --color-primary-400: var(--color-primary-400);
+  --color-primary-500: var(--color-primary-500);
+  --color-primary-600: var(--color-primary-600);
+  --color-primary-700: var(--color-primary-700);
+  --color-primary-800: var(--color-primary-800);
+  --color-primary-900: var(--color-primary-900);
+  --color-primary: var(--color-primary-600);
+  
+  /* Secondary Colors */
+  --color-secondary-50: var(--color-secondary-50);
+  --color-secondary-100: var(--color-secondary-100);
+  --color-secondary-200: var(--color-secondary-200);
+  --color-secondary-300: var(--color-secondary-300);
+  --color-secondary-400: var(--color-secondary-400);
+  --color-secondary-500: var(--color-secondary-500);
+  --color-secondary-600: var(--color-secondary-600);
+  --color-secondary-700: var(--color-secondary-700);
+  --color-secondary-800: var(--color-secondary-800);
+  --color-secondary-900: var(--color-secondary-900);
+  --color-secondary: var(--color-secondary-600);
+  
+  /* Fonts */
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-heading: var(--font-poppins), system-ui, sans-serif;
+}
+
+/* Base Styles */
+body {
+  @apply bg-background text-foreground antialiased;
+  font-family: var(--font-inter), sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  letter-spacing: -0.011em;
+}
+
+/* Smooth theme transitions - Applied selectively */
+body,
+main,
+section,
+header,
+footer,
+nav,
+div,
+article,
+aside {
+  transition: background-color 0.3s ease-in-out;
+}
+
+/* Text color transitions - smoother and faster */
+h1, h2, h3, h4, h5, h6,
+p, span, a, li, button {
+  transition: color 0.2s ease-in-out;
+}
+
+/* Border transitions */
+*[class*="border"] {
+  transition: border-color 0.2s ease-in-out;
+}
+
+/* SVG transitions */
+svg {
+  transition: fill 0.2s ease-in-out, stroke 0.2s ease-in-out;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading), sans-serif;
+  font-weight: 600;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  letter-spacing: -0.02em;
+}
+
+/* English: Use Poppins */
+[data-locale="en"] h1,
+[data-locale="en"] h2,
+[data-locale="en"] h3,
+[data-locale="en"] h4,
+[data-locale="en"] h5,
+[data-locale="en"] h6 {
+  --font-heading: var(--font-poppins);
+}
+
+/* Vietnamese: Use Space Grotesk */
+[data-locale="vn"] h1,
+[data-locale="vn"] h2,
+[data-locale="vn"] h3,
+[data-locale="vn"] h4,
+[data-locale="vn"] h5,
+[data-locale="vn"] h6 {
+  --font-heading: var(--font-space-grotesk);
+}
+
+/* Lightbox2 Custom Styles */
+.lightbox {
+  z-index: 9999 !important;
+}
+
+.lb-data .lb-caption {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.875rem;
+  color: #ffffff;
+}
+
+.lb-outerContainer {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+/* AOS (Animate On Scroll) Styles */
+[data-aos] {
+  pointer-events: auto;
+}
+
+.aos-init[data-aos][data-aos].aos-animate {
+  pointer-events: auto;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-muted);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary-500);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-400);
+}
+
+/* Selection */
+::selection {
+  background-color: var(--color-primary-500);
+  color: var(--color-dark);
+}
+
+/* Focus Visible */
+*:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+/* Smooth Scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Utility Classes */
+.container {
+  @apply mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+}
+
+/* Backdrop blur utilities for glassmorphism */
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.backdrop-blur-md {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.backdrop-blur-lg {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.backdrop-saturate {
+  backdrop-filter: saturate(180%);
+  -webkit-backdrop-filter: saturate(180%);
+}
+
+.gradient-primary {
+  background: linear-gradient(135deg, #00f0ff 0%, #00d9ff 100%);
+}
+
+.gradient-secondary {
+  background: linear-gradient(135deg, #ff00ff 0%, #ff0080 100%);
+}
+
+.gradient-hero {
+  background: var(--color-dark);
+}
+
+.gradient-button-primary {
+  background: linear-gradient(135deg, #00f0ff 0%, #00d9ff 100%);
+}
+
+.gradient-button-secondary {
+  background: linear-gradient(135deg, #ff00ff 0%, #ff0080 100%);
+}
+
+.gradient-button-accent {
+  background: linear-gradient(135deg, #00f0ff 0%, #ff00ff 100%);
+}
+
+/* Animation Utilities */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.4s ease-out;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.4s ease-out;
+}
