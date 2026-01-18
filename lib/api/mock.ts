@@ -6,11 +6,12 @@ import {
   ITeamMember,
   ITestimonial,
   Locale,
+  IGenericPage,
 } from '@/types';
 
 // Mock API service with professional bilingual content
 // Based on comprehensive service structure for Website Development, Digital Marketing, and Managed Services
-// Ready to be replaced with Contentful SDK calls
+// Fallback when CONTENT_SOURCE=mock (Sanity is the primary CMS)
 
 const content = {
   en: {
@@ -752,9 +753,7 @@ export async function getTeamMembers(locale: Locale = 'en'): Promise<ITeamMember
   return content[locale].team;
 }
 
-export async function getPage(slug: string, locale: Locale = 'en'): Promise<IPage | null> {
-  // Placeholder for page content
-  // In a real implementation, this would fetch from Contentful
+export async function getPage(slug: string): Promise<IPage | null> {
   return {
     id: slug,
     title: 'Page Title',
@@ -763,3 +762,272 @@ export async function getPage(slug: string, locale: Locale = 'en'): Promise<IPag
   };
 }
 
+export async function getGenericPage(
+  pagePath: string,
+  locale: Locale = 'en'
+): Promise<IGenericPage | null> {
+  const normalizedPath = pagePath === '/' || pagePath === '' ? '' : pagePath.replace(/^\//, '');
+
+  if (normalizedPath === '') {
+    const services = await getServices(locale);
+    const testimonials = await getTestimonials(locale);
+
+    return {
+      pagePath: '/',
+      seoTitle: 'HNSolutions - IT Development & Digital Marketing Services',
+      seoDescription: 'Professional IT development and digital marketing services. Build powerful websites, run effective campaigns, and optimize your digital presence.',
+      seoImage: '/og-image.jpg',
+      generalTranslations: {
+        heroTitle: locale === 'vn' ? 'Giải Pháp Công Nghệ & Marketing Kỹ Thuật Số' : 'IT Solutions & Digital Marketing',
+        heroSubtitle: locale === 'vn' ? 'Xây dựng website mạnh mẽ, chạy chiến dịch hiệu quả và tối ưu hóa sự hiện diện kỹ thuật số của bạn.' : 'Build powerful websites, run effective campaigns, and optimize your digital presence.',
+        heroCta: locale === 'vn' ? 'Bắt Đầu Ngay' : 'Get Started',
+        servicesTitle: locale === 'vn' ? 'Dịch Vụ Của Chúng Tôi' : 'Our Services',
+        servicesSubtitle: locale === 'vn' ? 'Giải pháp toàn diện phù hợp với nhu cầu kinh doanh của bạn' : 'Comprehensive solutions tailored to your business needs',
+        testimonialsTitle: locale === 'vn' ? 'Khách Hàng Nói Gì' : 'What Our Clients Say',
+        testimonialsSubtitle: locale === 'vn' ? 'Phản hồi từ những khách hàng đã tin tưởng chúng tôi' : 'Feedback from clients who trust us',
+      },
+      blocks: [
+        {
+          type: 'hero',
+          id: 'home-hero',
+          data: {
+            title: locale === 'vn' ? 'Giải Pháp Công Nghệ & Marketing Kỹ Thuật Số' : 'IT Solutions & Digital Marketing',
+            subtitle: locale === 'vn' ? 'Xây dựng website mạnh mẽ, chạy chiến dịch hiệu quả và tối ưu hóa sự hiện diện kỹ thuật số của bạn.' : 'Build powerful websites, run effective campaigns, and optimize your digital presence.',
+            ctaText: locale === 'vn' ? 'Bắt Đầu Ngay' : 'Get Started',
+            ctaLink: '/contact',
+          },
+        },
+        {
+          type: 'services',
+          id: 'home-services',
+          data: {
+            services,
+            title: locale === 'vn' ? 'Dịch Vụ Của Chúng Tôi' : 'Our Services',
+            subtitle: locale === 'vn' ? 'Giải pháp toàn diện phù hợp với nhu cầu kinh doanh của bạn' : 'Comprehensive solutions tailored to your business needs',
+          },
+        },
+        {
+          type: 'testimonials',
+          id: 'home-testimonials',
+          data: {
+            testimonials,
+            title: locale === 'vn' ? 'Khách Hàng Nói Gì' : 'What Our Clients Say',
+            subtitle: locale === 'vn' ? 'Phản hồi từ những khách hàng đã tin tưởng chúng tôi' : 'Feedback from clients who trust us',
+          },
+        },
+      ],
+    };
+  }
+
+  if (normalizedPath === 'services') {
+    const services = await getServices(locale);
+
+    return {
+      pagePath: '/services',
+      seoTitle: 'Our Services - HNSolutions',
+      seoDescription: 'Explore our comprehensive IT development and digital marketing services.',
+      seoImage: '/og-image.jpg',
+      generalTranslations: {
+        heroTitle: locale === 'vn' ? 'Dịch Vụ' : 'Our Services',
+        heroSubtitle: locale === 'vn' ? 'Giải pháp toàn diện phù hợp với nhu cầu kinh doanh của bạn' : 'Comprehensive solutions tailored to your business needs',
+        ctaText: locale === 'vn' ? 'Liên Hệ Chúng Tôi' : 'Contact Us',
+      },
+      blocks: [
+        {
+          type: 'hero',
+          id: 'services-hero',
+          data: {
+            title: locale === 'vn' ? 'Dịch Vụ' : 'Our Services',
+            subtitle: locale === 'vn' ? 'Giải pháp toàn diện phù hợp với nhu cầu kinh doanh của bạn' : 'Comprehensive solutions tailored to your business needs',
+          },
+        },
+        {
+          type: 'services',
+          id: 'services-grid',
+          data: {
+            services,
+            layout: 'grid',
+          },
+        },
+        {
+          type: 'cta',
+          id: 'services-cta',
+          data: {
+            title: locale === 'vn' ? 'Hãy Xây Dựng Điều Gì Đó Tuyệt Vời Cùng Nhau' : "Let's Build Something Amazing Together",
+            description: locale === 'vn' ? 'Sẵn sàng đưa doanh nghiệp của bạn lên tầm cao mới? Liên hệ với chúng tôi ngay hôm nay.' : 'Ready to take your business to the next level? Contact us today.',
+            buttonText: locale === 'vn' ? 'Liên Hệ Chúng Tôi' : 'Contact Us',
+            buttonLink: '/contact',
+          },
+        },
+      ],
+    };
+  }
+
+  if (normalizedPath === 'portfolio') {
+    const portfolioItems = await getPortfolioItems(locale);
+
+    return {
+      pagePath: '/portfolio',
+      seoTitle: 'Portfolio - HNSolutions',
+      seoDescription: 'View our portfolio of successful projects and case studies.',
+      seoImage: '/og-image.jpg',
+      generalTranslations: {
+        heroTitle: locale === 'vn' ? 'Portfolio' : 'Portfolio',
+        heroSubtitle: locale === 'vn' ? 'Xem danh mục các dự án thành công và nghiên cứu điển hình của chúng tôi' : 'View our portfolio of successful projects and case studies',
+      },
+      blocks: [
+        {
+          type: 'hero',
+          id: 'portfolio-hero',
+          data: {
+            title: locale === 'vn' ? 'Portfolio' : 'Portfolio',
+            subtitle: locale === 'vn' ? 'Xem danh mục các dự án thành công và nghiên cứu điển hình của chúng tôi' : 'View our portfolio of successful projects and case studies',
+          },
+        },
+        {
+          type: 'portfolio',
+          id: 'portfolio-grid',
+          data: {
+            items: portfolioItems,
+          },
+        },
+      ],
+    };
+  }
+
+  if (normalizedPath === 'blog') {
+    const blogPosts = await getBlogPosts(locale);
+
+    return {
+      pagePath: '/blog',
+      seoTitle: 'Blog - HNSolutions',
+      seoDescription: 'Insights, tips, and news about IT development and digital marketing.',
+      seoImage: '/og-image.jpg',
+      generalTranslations: {
+        heroTitle: locale === 'vn' ? 'Blog' : 'Blog',
+        heroSubtitle: locale === 'vn' ? 'Thông tin chi tiết, mẹo và tin tức về phát triển IT và marketing kỹ thuật số' : 'Insights, tips, and trends in IT and digital marketing',
+      },
+      blocks: [
+        {
+          type: 'hero',
+          id: 'blog-hero',
+          data: {
+            title: locale === 'vn' ? 'Blog' : 'Blog',
+            subtitle: locale === 'vn' ? 'Thông tin chi tiết, mẹo và tin tức về phát triển IT và marketing kỹ thuật số' : 'Insights, tips, and trends in IT and digital marketing',
+          },
+        },
+        {
+          type: 'blog-list',
+          id: 'blog-list',
+          data: {
+            posts: blogPosts,
+          },
+        },
+      ],
+    };
+  }
+
+  if (normalizedPath.startsWith('blog/')) {
+    const slug = normalizedPath.replace('blog/', '');
+    const post = await getBlogPost(slug, locale);
+
+    if (!post) {
+      return null;
+    }
+
+    return {
+      pagePath: `/blog/${slug}`,
+      seoTitle: `${post.title} - HNSolutions`,
+      seoDescription: post.excerpt,
+      seoImage: post.featuredImage,
+      generalTranslations: {
+        backToBlog: locale === 'vn' ? '← Quay lại Blog' : '← Back to Blog',
+        authorLabel: locale === 'vn' ? 'Tác giả' : 'Author',
+        dateLabel: locale === 'vn' ? 'Ngày' : 'Date',
+      },
+      blocks: [
+        {
+          type: 'hero',
+          id: 'blog-post-hero',
+          data: {
+            title: post.title,
+            subtitle: post.excerpt,
+            metadata: {
+              author: post.author,
+              date: post.date,
+            },
+          },
+        },
+        {
+          type: 'blog-post',
+          id: 'blog-post-content',
+          data: {
+            post,
+          },
+        },
+      ],
+    };
+  }
+
+  if (normalizedPath === 'about') {
+    const teamMembers = await getTeamMembers(locale);
+
+    return {
+      pagePath: '/about',
+      seoTitle: 'About Us - HNSolutions',
+      seoDescription: 'Meet our team of experts in IT development and digital marketing.',
+      seoImage: '/og-image.jpg',
+      generalTranslations: {
+        heroTitle: locale === 'vn' ? 'Về Chúng Tôi' : 'About Us',
+        heroSubtitle: locale === 'vn' ? 'Gặp gỡ đội ngũ chuyên gia của chúng tôi về phát triển IT và marketing kỹ thuật số' : 'Meet our team of experts in IT development and digital marketing',
+      },
+      blocks: [
+        {
+          type: 'hero',
+          id: 'about-hero',
+          data: {
+            title: locale === 'vn' ? 'Về Chúng Tôi' : 'About Us',
+            subtitle: locale === 'vn' ? 'Gặp gỡ đội ngũ chuyên gia của chúng tôi về phát triển IT và marketing kỹ thuật số' : 'Meet our team of experts in IT development and digital marketing',
+          },
+        },
+        {
+          type: 'team',
+          id: 'team-grid',
+          data: {
+            members: teamMembers,
+          },
+        },
+      ],
+    };
+  }
+
+  if (normalizedPath === 'contact') {
+    return {
+      pagePath: '/contact',
+      seoTitle: 'Contact Us - HNSolutions',
+      seoDescription: 'Get in touch with us for your IT development and digital marketing needs.',
+      seoImage: '/og-image.jpg',
+      generalTranslations: {
+        heroTitle: locale === 'vn' ? 'Liên Hệ' : 'Contact Us',
+        heroSubtitle: locale === 'vn' ? 'Liên hệ với chúng tôi cho nhu cầu phát triển IT và marketing kỹ thuật số của bạn' : 'Get in touch with us for your IT development and digital marketing needs',
+      },
+      blocks: [
+        {
+          type: 'hero',
+          id: 'contact-hero',
+          data: {
+            title: locale === 'vn' ? 'Liên Hệ' : 'Contact Us',
+            subtitle: locale === 'vn' ? 'Liên hệ với chúng tôi cho nhu cầu phát triển IT và marketing kỹ thuật số của bạn' : 'Get in touch with us for your IT development and digital marketing needs',
+          },
+        },
+        {
+          type: 'contact-form',
+          id: 'contact-form',
+          data: {},
+        },
+      ],
+    };
+  }
+
+  return null;
+}

@@ -1,14 +1,11 @@
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-  const spaceId = process.env.CONTENTFUL_SPACE_ID;
+  const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 
-  if (!spaceId) {
-    // If no space ID is configured, redirect to Contentful homepage
-    return NextResponse.redirect('https://www.contentful.com');
+  if (!projectId) {
+    return NextResponse.redirect('https://www.sanity.io');
   }
 
-  // Redirect to Contentful dashboard for this space
-  return NextResponse.redirect(`https://app.contentful.com/spaces/${spaceId}`);
+  return NextResponse.redirect(`https://cms-staging.hnsolutions.io`);
 }
-

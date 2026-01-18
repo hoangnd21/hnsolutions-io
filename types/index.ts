@@ -1,6 +1,35 @@
 // Barreled interface exports for HNSolutions website
 
 // ============================================================================
+// Sanity Base Types
+// ============================================================================
+
+export interface ISanityDocument {
+  _id: string;
+  _type: string;
+  _createdAt?: string;
+  _updatedAt?: string;
+  _rev?: string;
+}
+
+export interface ISanityReference {
+  _ref: string;
+  _type: 'reference';
+}
+
+export interface ITranslationPair {
+  _key: string;
+  key: string;
+  value: string;
+}
+
+export interface IGenericTranslationsBlock extends ISanityDocument {
+  _type: 'GenericTranslationsBlock';
+  internalName: string;
+  pairs?: ITranslationPair[];
+}
+
+// ============================================================================
 // Content Types
 // ============================================================================
 
@@ -78,6 +107,64 @@ export interface IContactFormData {
   company?: string;
   message: string;
 }
+
+// ============================================================================
+// Generic Page Structure
+// ============================================================================
+
+// Raw type from Sanity (with expanded reference)
+export interface ISanityGenericPage extends ISanityDocument {
+  _type: 'genericPage';
+  internalName: string;
+  pagePath: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  seoImage?: string;
+  generalTranslations?: IGenericTranslationsBlock;
+  blocks?: IBlock[];
+}
+
+// Frontend-friendly type (translations as object)
+export interface IGenericPage {
+  _id: string;
+  _type: 'genericPage';
+  internalName: string;
+  pagePath: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  seoImage?: string;
+  generalTranslations: Record<string, string>;
+  blocks: IBlock[];
+}
+
+export interface IBlock extends ISanityDocument {
+  internalName: string;
+}
+
+export interface IMenuItemBlock extends IBlock {
+  _type: 'MenuItemBlock';
+  text: string;
+  href?: string;
+  items?: IMenuItemBlock[];
+}
+
+export interface IMenuBlock extends IBlock {
+  _type: 'MenuBlock';
+  items?: IMenuItemBlock[];
+}
+
+export type BlockType =
+  | 'hero'
+  | 'services'
+  | 'testimonials'
+  | 'portfolio'
+  | 'blog-list'
+  | 'blog-post'
+  | 'team'
+  | 'contact-form'
+  | 'text-content'
+  | 'image-gallery'
+  | 'cta';
 
 // ============================================================================
 // Component Props

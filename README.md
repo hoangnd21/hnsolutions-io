@@ -15,7 +15,7 @@ A modern, bilingual company website built with Next.js 16, TypeScript, Tailwind 
 - 🔍 **SEO Optimized**: Dynamic metadata, sitemap, robots.txt
 - 📊 **Analytics Ready**: Google Tag Manager integration
 - 🎯 **State Management**: Zustand for global state
-- 🗂️ **Mock API**: Ready-to-replace mock content service for Contentful migration
+- 🗂️ **Sanity CMS**: Headless CMS integration with GROQ queries
 
 ## 📋 Prerequisites
 
@@ -41,8 +41,13 @@ npm install
 CONTACT_EMAIL=contact@hnsolutions.io
 MAX_EMAIL=max@hnsolutions.io
 NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX  # Optional
-CONTENTFUL_SPACE_ID=your_space_id_here  # For future use
-CONTENTFUL_ACCESS_TOKEN=your_access_token_here  # For future use
+
+# Sanity CMS
+NEXT_PUBLIC_SANITY_PROJECT_ID=hoekvd4n
+NEXT_PUBLIC_SANITY_DATASET=production
+NEXT_PUBLIC_SANITY_API_VERSION=2025-01-19
+SANITY_API_READ_TOKEN=<your-viewer-token>
+CONTENT_SOURCE=sanity  # or 'mock' for development
 ```
 
 4. Run the development server:
@@ -61,6 +66,7 @@ npm run dev
 │   ├── contact/             # Contact page
 │   ├── portfolio/           # Portfolio page
 │   ├── services/            # Services page
+│   ├── [...page]/           # Dynamic CMS pages
 │   ├── api/contact/         # Contact form API
 │   ├── cms/                 # CMS redirect route
 │   ├── layout.tsx           # Root layout with providers
@@ -68,6 +74,7 @@ npm run dev
 │   ├── sitemap.ts           # Dynamic sitemap
 │   └── robots.ts            # Robots.txt
 ├── components/
+│   ├── blocks/              # CMS block components
 │   ├── carousel/            # Swiper carousel components
 │   ├── forms/               # Contact form
 │   ├── gallery/             # Lightbox2 gallery
@@ -81,7 +88,13 @@ npm run dev
 │   └── locales.ts           # Locale definitions
 ├── lib/
 │   ├── analytics/           # Google Tag Manager
-│   ├── api/mock.ts          # Mock API service
+│   ├── api/                 # Content providers
+│   │   ├── content-provider.ts  # Unified content API
+│   │   └── mock.ts          # Mock data fallback
+│   ├── sanity/              # Sanity CMS integration
+│   │   ├── client.ts        # Sanity client config
+│   │   ├── queries.ts       # GROQ queries
+│   │   └── fetch.ts         # Fetch helper with caching
 │   ├── store/               # Zustand store
 │   ├── cookies.ts           # Cookie utilities
 │   ├── i18n.ts              # i18n utilities
@@ -97,7 +110,7 @@ npm run dev
 The website supports English and Vietnamese:
 - Cookie-based language preference (`NEXT_LOCALE`)
 - Language switcher in header
-- Content from mock API (ready for Contentful)
+- Content from Sanity CMS
 - UI labels from JSON dictionaries
 
 ## 🎨 Customization
@@ -114,10 +127,10 @@ export const theme = {
 ```
 
 ### Content
-Currently using mock API (`lib/api/mock.ts`). To migrate to Contentful:
-1. Set up Contentful space with content models
-2. Add credentials to `.env.local`
-3. Replace mock functions with Contentful SDK calls
+Content is managed via Sanity CMS:
+1. Access the CMS at `https://cms-staging.hnsolutions.io`
+2. Create and edit `genericPage` documents
+3. Pages are fetched via GROQ queries with ISR caching
 4. Visit `/cms` route for quick dashboard access
 
 ## 📧 Contact Form
@@ -159,13 +172,14 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 - **Portfolio**: `/portfolio`
 - **Blog**: `/blog`
 - **Contact**: `/contact`
-- **CMS Dashboard**: `/cms` (redirects to Contentful)
+- **CMS Dashboard**: `/cms` (redirects to Sanity Studio)
 
 ## 🛠️ Technologies
 
 - **Framework**: Next.js 16.1.1
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS v4
+- **CMS**: Sanity
 - **Animations**: AOS (Animate On Scroll)
 - **Carousel**: Swiper
 - **Gallery**: Lightbox2
@@ -176,7 +190,6 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 ## 📝 TODO
 
 - [ ] Update brand colors in `config/theme.ts`
-- [ ] Set up Contentful CMS and migrate from mock API
 - [ ] Implement email service for contact form
 - [ ] Add company logo and brand assets
 - [ ] Configure Google Tag Manager
