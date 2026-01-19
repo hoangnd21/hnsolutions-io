@@ -22,3 +22,9 @@ export const GENERIC_PAGE_BY_PATH_QUERY = defineQuery(`
     }
   }
 `);
+
+export const ALL_PAGE_PATHS_QUERY = defineQuery(`
+  *[_type == "genericPage" && defined(pagePath)]{
+    "pagePath": pagePath
+  }
+`);

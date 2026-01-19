@@ -1,15 +1,29 @@
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { getGenericPage } from '@/lib/api/content-provider';
-import { getLocaleFromCookie } from '@/lib/i18n';
-import { cookies } from 'next/headers';
+import { sanityFetch } from '@/lib/sanity/fetch';
+import { ALL_PAGE_PATHS_QUERY } from '@/lib/sanity/queries';
 
 interface IDynamicPageProps {
   params: Promise<{ page?: string[] }>;
 }
 
-async function getPageData(pagePath: string, locale: string) {
-  return await getGenericPage(pagePath, locale as 'en' | 'vn');
+async function getPageData(pagePath: string) {
+  return await getGenericPage(pagePath, 'en');
+}
+
+export async function generateStaticParams() {
+  const pages = await sanityFetch<{ pagePath: string }[]>({
+    query: ALL_PAGE_PATHS_QUERY,
+    revalidate: false,
+  });
+
+  return pages.map((p) => {
+    const path = p.pagePath.replace(/^\//, '');
+    return {
+      page: path === '' ? undefined : path.split('/'),
+    };
+  });
 }
 
 export async function generateMetadata({
@@ -17,10 +31,8 @@ export async function generateMetadata({
 }: IDynamicPageProps): Promise<Metadata> {
   const resolvedParams = await params;
   const pagePath = resolvedParams.page?.join('/') || '';
-  const cookieStore = await cookies();
-  const locale = getLocaleFromCookie(cookieStore.toString());
 
-  const page = await getPageData(pagePath, locale);
+  const page = await getPageData(pagePath);
 
   if (!page) {
     return {
@@ -48,10 +60,8 @@ export async function generateMetadata({
 export default async function DynamicPage({ params }: IDynamicPageProps) {
   const resolvedParams = await params;
   const pagePath = resolvedParams.page?.join('/') || '';
-  const cookieStore = await cookies();
-  const locale = getLocaleFromCookie(cookieStore.toString());
 
-  const page = await getPageData(pagePath, locale);
+  const page = await getPageData(pagePath);
 
   if (!page) {
     notFound();
