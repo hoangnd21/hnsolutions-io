@@ -1,7 +1,18 @@
 import { MetadataRoute } from 'next';
 
+const IS_PROD = process.env.NODE_ENV === 'production' || process.env.VERCEL_ENV === 'production';
+
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = 'https://hnsolutions.io'; // Update with your actual domain
+  if (!IS_PROD) {
+    return {
+      rules: {
+        userAgent: '*',
+        disallow: '/',
+      },
+    };
+  }
+
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'www.hnsolutions.io';
 
   return {
     rules: {
@@ -9,7 +20,7 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/cms/'],
     },
-    sitemap: `${baseUrl}/sitemap.xml`,
+    sitemap: `https://${baseUrl}/sitemap.xml`,
   };
 }
 
