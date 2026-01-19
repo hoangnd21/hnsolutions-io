@@ -20,7 +20,7 @@ export async function ContactFormBlock({
   const dict = await getDictionary(locale);
 
   return (
-    <Section background="white">
+    <Section background="white" data-component="ContactFormBlock">
       <div className="max-w-2xl mx-auto" data-aos="fade-up">
         <Card padding="lg">
           <h2 className="text-2xl font-bold mb-6 dark:text-white">

@@ -14,7 +14,7 @@ export function PortfolioBlock({ data, translations }: IPortfolioBlockProps) {
   const { items } = data;
 
   return (
-    <Section background="white">
+    <Section background="white" data-component="PortfolioBlock">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {items.map((item, index) => (
           <Card

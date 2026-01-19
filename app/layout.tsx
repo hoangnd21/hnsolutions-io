@@ -8,12 +8,12 @@ import { ThemeProvider } from "@/lib/theme-provider";
 import { GoogleTagManager, GoogleTagManagerNoScript } from "@/lib/analytics/gtm";
 import { getDictionary, getLocaleFromCookie } from "@/lib/i18n";
 import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
 import { ProgressBar } from "@/components/progress/ProgressBar";
 import { FontSwitcher } from "@/components/ui/FontSwitcher";
 import { MenuProvider } from "@/lib/menu-context";
 import { cookies } from "next/headers";
 import Script from "next/script";
+import { DebugWrapperDynamic } from "@/components/debug/DebugWrapperDynamic";
 
 export const metadata: Metadata = {
   title: "HNSolutions - IT & Marketing Solutions",
@@ -50,9 +50,9 @@ export default async function RootLayout({
             <ProgressBar />
             <FontSwitcher />
             <div className="flex min-h-screen flex-col">
+              <DebugWrapperDynamic />
               <Header dict={dict} />
               <main className="flex-1">{children}</main>
-              <Footer dict={dict} />
             </div>
           </MenuProvider>
         </ThemeProvider>

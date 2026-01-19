@@ -16,7 +16,7 @@ export function CTABlock({ data, translations }: ICTABlockProps) {
   const { title, description, buttonText, buttonLink } = data;
 
   return (
-    <Section background="muted">
+    <Section background="muted" data-component="CTABlock">
       <div className="text-center max-w-3xl mx-auto" data-aos="fade-up">
         <h2 className="text-3xl md:text-4xl font-bold mb-6 dark:text-white">
           {title}

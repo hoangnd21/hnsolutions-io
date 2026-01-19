@@ -42,7 +42,7 @@ export function TestimonialsBlock({
   ));
 
   return (
-    <Section background="muted">
+    <Section background="muted" data-component="TestimonialsBlock">
       {title && (
         <div className="text-center mb-12" data-aos="fade-up">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 dark:text-white">

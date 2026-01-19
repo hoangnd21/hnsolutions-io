@@ -150,10 +150,16 @@ export interface IBlock extends ISanityDocument {
   internalName: string;
 }
 
+export interface ILinkObject {
+  linkType?: 'page' | 'url';
+  page?: {_ref: string; _type: 'reference'} | {pagePath: string};
+  url?: string;
+}
+
 export interface IMenuItemBlock extends IBlock {
   _type: 'MenuItemBlock';
   text: string;
-  href?: string;
+  href?: ILinkObject | string;
   items?: IMenuItemBlock[];
 }
 
@@ -162,8 +168,68 @@ export interface IMenuBlock extends IBlock {
   items?: IMenuItemBlock[];
 }
 
+export interface IFooterColumnBlock extends IBlock {
+  _type: 'FooterColumnBlock';
+  title?: string;
+  items?: IMenuItemBlock[];
+}
+
+export interface IFooterSocialLink {
+  _key: string;
+  platform: string;
+  url: string;
+  icon?: string;
+}
+
+export interface IFooterSocialLinksBlock extends IBlock {
+  _type: 'FooterSocialLinksBlock';
+  links?: IFooterSocialLink[];
+}
+
+export interface IFooterBlock extends IBlock {
+  _type: 'FooterBlock';
+  columns?: IFooterColumnBlock[];
+  socialLinks?: IFooterSocialLinksBlock;
+  copyrightText?: string;
+}
+
+export interface IHeroBlock extends IBlock {
+  _type: 'HeroBlock';
+  title: string;
+  subtitle?: string;
+  ctaText?: string;
+  ctaLink?: ILinkObject | string;
+  metadata?: {
+    author?: string;
+    date?: string;
+  };
+  backgroundImage?: string | {
+    asset: {
+      _ref: string;
+      _type: 'reference';
+    };
+    url?: string;
+  };
+}
+
+export interface ICalloutButton {
+  _key: string;
+  text: string;
+  href: ILinkObject | string;
+  variant?: 'primary' | 'primaryInvert' | 'reversePrimary';
+}
+
+export interface ICalloutBlock extends IBlock {
+  _type: 'CalloutBlock';
+  headline: string;
+  description: string;
+  buttons?: ICalloutButton[];
+  backgroundGradient?: string;
+}
+
 export type BlockType =
   | 'hero'
+  | 'HeroBlock'
   | 'services'
   | 'testimonials'
   | 'portfolio'
@@ -173,7 +239,9 @@ export type BlockType =
   | 'contact-form'
   | 'text-content'
   | 'image-gallery'
-  | 'cta';
+  | 'cta'
+  | 'FooterBlock'
+  | 'CalloutBlock';
 
 // ============================================================================
 // Component Props
@@ -181,10 +249,10 @@ export type BlockType =
 
 export interface IButtonProps {
   children: React.ReactNode;
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'primaryInvert' | 'reversePrimary';
   size?: 'sm' | 'md' | 'lg';
   className?: string;
-  onClick?: () => void;
+  onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
 }

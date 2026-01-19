@@ -18,7 +18,7 @@ export async function BlogListBlock({ data, translations }: IBlogListBlockProps)
   const locale = getLocaleFromCookie(cookieStore.toString());
 
   return (
-    <Section background="white">
+    <Section background="white" data-component="BlogListBlock">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {posts.map((post, index) => (
           <Card

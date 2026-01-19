@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useMenu } from '@/lib/menu-context';
 import { IMenuBlock, IMenuItemBlock, IHeaderItem } from '@/types';
+import { resolveLink } from '@/lib/utils';
 
 interface IMenuBlockProps {
   data: IMenuBlock;
@@ -11,7 +12,7 @@ interface IMenuBlockProps {
 
 function transformMenuItem(item: IMenuItemBlock): IHeaderItem {
   return {
-    href: item.href,
+    href: resolveLink(item.href),
     text: item.text,
     childItems: item.items?.map(transformMenuItem),
   };

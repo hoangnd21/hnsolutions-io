@@ -1,40 +1,67 @@
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
+import { IHeroBlock } from '@/types';
 import Link from 'next/link';
+import { resolveLink } from '@/lib/utils';
 
 interface IHeroBlockProps {
-  data: {
-    title: string;
-    subtitle?: string;
-    ctaText?: string;
-    ctaLink?: string;
-    metadata?: {
-      author?: string;
-      date?: string;
-    };
-  };
+  data: IHeroBlock;
   translations: Record<string, string>;
 }
 
 export function HeroBlock({ data, translations }: IHeroBlockProps) {
+  const { title, subtitle, ctaText, ctaLink, metadata, backgroundImage } = data;
+
+  const backgroundImageUrl = typeof backgroundImage === 'string' 
+    ? backgroundImage 
+    : backgroundImage?.url;
+
+  const sectionStyle = backgroundImageUrl
+    ? {
+        backgroundImage: `url(${backgroundImageUrl})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }
+    : undefined;
+
+  const ctaHref = ctaLink ? resolveLink(ctaLink) : undefined;
+
   return (
-    <Section background="gradient" className="text-white dark:text-[#e5e5e5]">
-      <div className="max-w-4xl mx-auto text-center" data-aos="fade-up">
+    <Section 
+      background="gradient" 
+      className="text-white dark:text-[#e5e5e5] relative overflow-hidden flex items-center justify-center"
+      data-component="HeroBlock"
+      style={{ 
+        minHeight: '700px',
+        ...(sectionStyle || {})
+      }}
+    >
+      {sectionStyle && (
+        <div 
+          className="absolute inset-0 w-screen left-1/2 -translate-x-1/2 -z-10 pointer-events-none" 
+          style={sectionStyle}
+        />
+      )}
+      <div 
+        className="max-w-4xl mx-auto text-center relative z-10 w-full" 
+        data-aos="fade-up"
+      >
         <h1 className="text-4xl md:text-6xl font-bold mb-6 dark:text-white">
-          {data.title}
+          {title}
         </h1>
-        {data.subtitle && (
+        {subtitle && (
           <p className="text-xl md:text-2xl mb-8 text-white/90 dark:text-[#e5e5e5]/90">
-            {data.subtitle}
+            {subtitle}
           </p>
         )}
-        {data.metadata && (
+        {metadata && (
           <div className="flex items-center justify-center gap-4 text-white/80 mb-8">
-            {data.metadata.author && <span>{data.metadata.author}</span>}
-            {data.metadata.author && data.metadata.date && <span>•</span>}
-            {data.metadata.date && (
+            {metadata.author && <span>{metadata.author}</span>}
+            {metadata.author && metadata.date && <span>•</span>}
+            {metadata.date && (
               <span>
-                {new Date(data.metadata.date).toLocaleDateString('en-US', {
+                {new Date(metadata.date).toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric',
@@ -43,10 +70,10 @@ export function HeroBlock({ data, translations }: IHeroBlockProps) {
             )}
           </div>
         )}
-        {data.ctaText && data.ctaLink && (
-          <Link href={data.ctaLink}>
+        {ctaText && ctaHref && (
+          <Link href={ctaHref}>
             <Button variant="secondary" size="lg">
-              {data.ctaText}
+              {ctaText}
             </Button>
           </Link>
         )}

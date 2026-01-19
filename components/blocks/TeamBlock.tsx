@@ -13,7 +13,7 @@ export function TeamBlock({ data, translations }: ITeamBlockProps) {
   const { members } = data;
 
   return (
-    <Section background="white">
+    <Section background="white" data-component="TeamBlock">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {members.map((member, index) => (
           <Card

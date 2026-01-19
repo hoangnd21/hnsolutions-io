@@ -4,6 +4,8 @@ import { getGenericPage } from '@/lib/api/content-provider';
 import { sanityFetch } from '@/lib/sanity/fetch';
 import { ALL_PAGE_PATHS_QUERY } from '@/lib/sanity/queries';
 import { BlockRenderer } from '@/components/blocks/BlockRenderer';
+import { FooterBlock } from '@/components/blocks/FooterBlock';
+import { IFooterBlock } from '@/types';
 
 interface IDynamicPageProps {
   params: Promise<{ page?: string[] }>;
@@ -75,17 +77,24 @@ export default async function DynamicPage({ params, searchParams }: IDynamicPage
     notFound();
   }
 
+  const footerBlock = page.blocks?.find(
+    (block): block is IFooterBlock => block._type === 'FooterBlock'
+  );
+  const contentBlocks = page.blocks?.filter(
+    (block) => block._type !== 'FooterBlock'
+  ) || [];
+
   return (
     <>
-      {showDebug && (
-        <div className="container mx-auto px-4 py-8 border-b border-gray-700">
-          <h1 className="text-2xl font-mono text-gray-400 mb-4">Page Data (Debug)</h1>
-          <pre className="bg-transparent border border-gray-700 p-6 rounded-lg overflow-auto text-sm text-gray-400 font-mono leading-relaxed max-h-96">
-            {JSON.stringify(page, null, 2)}
-          </pre>
-        </div>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `window.__DEBUG_PAGE_DATA__ = ${JSON.stringify(page)};`,
+        }}
+      />
+      <BlockRenderer blocks={contentBlocks} translations={page.generalTranslations} />
+      {footerBlock && (
+        <FooterBlock data={footerBlock} translations={page.generalTranslations} />
       )}
-      <BlockRenderer blocks={page.blocks} translations={page.generalTranslations} />
     </>
   );
 }

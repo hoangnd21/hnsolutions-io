@@ -13,7 +13,7 @@ export function BlogPostBlock({ data, translations }: IBlogPostBlockProps) {
   const { post } = data;
 
   return (
-    <Section background="white">
+    <Section background="white" data-component="BlogPostBlock">
       <div className="max-w-3xl mx-auto">
         <div
           className="prose prose-lg dark:prose-invert max-w-none"

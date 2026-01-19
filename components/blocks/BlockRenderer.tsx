@@ -11,6 +11,8 @@ import { TextContentBlock } from './TextContentBlock';
 import { ImageGalleryBlock } from './ImageGalleryBlock';
 import { CTABlock } from './CTABlock';
 import { MenuBlock } from './MenuBlock';
+import { FooterBlock } from './FooterBlock';
+import { CalloutBlock } from './CalloutBlock';
 
 interface IBlockRendererProps {
   blocks: IBlock[];
@@ -19,6 +21,7 @@ interface IBlockRendererProps {
 
 const blockComponents: Record<string, React.ComponentType<any>> = {
   hero: HeroBlock,
+  HeroBlock: HeroBlock,
   services: ServicesBlock,
   testimonials: TestimonialsBlock,
   portfolio: PortfolioBlock,
@@ -31,6 +34,8 @@ const blockComponents: Record<string, React.ComponentType<any>> = {
   cta: CTABlock,
   MenuBlock: MenuBlock,
   menuBlock: MenuBlock,
+  FooterBlock: FooterBlock,
+  CalloutBlock: CalloutBlock,
 };
 
 export async function BlockRenderer({

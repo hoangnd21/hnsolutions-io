@@ -15,7 +15,7 @@ export function TextContentBlock({
   const { content, title } = data;
 
   return (
-    <Section background="white">
+    <Section background="white" data-component="TextContentBlock">
       <div className="max-w-3xl mx-auto">
         {title && (
           <h2 className="text-3xl md:text-4xl font-bold mb-6 dark:text-white" data-aos="fade-up">

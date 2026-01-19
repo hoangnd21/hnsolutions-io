@@ -18,7 +18,7 @@ export function ServicesBlock({ data, translations }: IServicesBlockProps) {
   const { services, title, subtitle, layout = 'grid' } = data;
 
   return (
-    <Section background="white">
+    <Section background="white" data-component="ServicesBlock">
       {title && (
         <div className="text-center mb-12" data-aos="fade-up">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 dark:text-white">
