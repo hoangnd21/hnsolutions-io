@@ -1,8 +1,10 @@
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
+import { cookies } from 'next/headers';
 import { getGenericPage } from '@/lib/api/content-provider';
 import { sanityFetch } from '@/lib/sanity/fetch';
 import { ALL_PAGE_PATHS_QUERY } from '@/lib/sanity/queries';
+import { getLocaleFromCookie } from '@/lib/i18n';
 import { BlockRenderer } from '@/components/blocks/BlockRenderer';
 import { FooterBlock } from '@/components/blocks/FooterBlock';
 import { IFooterBlock } from '@/types';
@@ -13,7 +15,9 @@ interface IDynamicPageProps {
 }
 
 async function getPageData(pagePath: string, useMock: boolean = false) {
-  return await getGenericPage(pagePath, { locale: 'en', useMock });
+  const cookieStore = await cookies();
+  const locale = getLocaleFromCookie(cookieStore.toString());
+  return await getGenericPage(pagePath, { locale, useMock });
 }
 
 export async function generateStaticParams() {
@@ -39,7 +43,9 @@ export async function generateMetadata({
   const pagePath = resolvedParams.page?.join('/') || '';
   const useMock = resolvedSearchParams.mock === 'true';
 
-  const page = await getPageData(pagePath, useMock);
+  const cookieStore = await cookies();
+  const locale = getLocaleFromCookie(cookieStore.toString());
+  const page = await getGenericPage(pagePath, { locale, useMock });
 
   if (!page) {
     return {

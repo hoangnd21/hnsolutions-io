@@ -122,12 +122,14 @@ export interface IContactFormData {
 // ============================================================================
 
 // Raw type from Sanity (with expanded reference)
+// Note: Localized fields (seoTitle, seoDescription) are transformed to strings
+// by GROQ coalesce() in the query, so they appear as strings here
 export interface ISanityGenericPage extends ISanityDocument {
   _type: 'genericPage';
   internalName: string;
   pagePath: string;
-  seoTitle?: string;
-  seoDescription?: string;
+  seoTitle?: string; // Transformed from localeString via coalesce(seoTitle[$locale], seoTitle.en)
+  seoDescription?: string; // Transformed from localeText via coalesce(seoDescription[$locale], seoDescription.en)
   seoImage?: string;
   generalTranslations?: IGenericTranslationsBlock;
   blocks?: IBlock[];
@@ -158,7 +160,7 @@ export interface ILinkObject {
 
 export interface IMenuItemBlock extends IBlock {
   _type: 'MenuItemBlock';
-  text: string;
+  text: string; // Transformed from localeString via coalesce(text[$locale], text.en)
   href?: ILinkObject | string;
   items?: IMenuItemBlock[];
 }
@@ -170,7 +172,7 @@ export interface IMenuBlock extends IBlock {
 
 export interface IFooterColumnBlock extends IBlock {
   _type: 'FooterColumnBlock';
-  title?: string;
+  title?: string; // Transformed from localeString via coalesce(title[$locale], title.en)
   items?: IMenuItemBlock[];
 }
 
@@ -190,14 +192,14 @@ export interface IFooterBlock extends IBlock {
   _type: 'FooterBlock';
   columns?: IFooterColumnBlock[];
   socialLinks?: IFooterSocialLinksBlock;
-  copyrightText?: string;
+  copyrightText?: string; // Transformed from localeString via coalesce(copyrightText[$locale], copyrightText.en)
 }
 
 export interface IHeroBlock extends IBlock {
   _type: 'HeroBlock';
-  title: string;
-  subtitle?: string;
-  ctaText?: string;
+  title: string; // Transformed from localeString via coalesce(title[$locale], title.en)
+  subtitle?: string; // Transformed from localeString via coalesce(subtitle[$locale], subtitle.en)
+  ctaText?: string; // Transformed from localeString via coalesce(ctaText[$locale], ctaText.en)
   ctaLink?: ILinkObject | string;
   metadata?: {
     author?: string;
@@ -214,15 +216,15 @@ export interface IHeroBlock extends IBlock {
 
 export interface ICalloutButton {
   _key: string;
-  text: string;
+  text: string; // Transformed from localeString via coalesce(text[$locale], text.en)
   href: ILinkObject | string;
   variant?: 'primary' | 'primaryInvert' | 'reversePrimary';
 }
 
 export interface ICalloutBlock extends IBlock {
   _type: 'CalloutBlock';
-  headline: string;
-  description: string;
+  headline: string; // Transformed from localeString via coalesce(headline[$locale], headline.en)
+  description: string; // Transformed from localeText via coalesce(description[$locale], description.en)
   buttons?: ICalloutButton[];
   backgroundGradient?: string;
 }

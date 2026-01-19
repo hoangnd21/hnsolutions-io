@@ -23,16 +23,17 @@ export function transformGenericPage(raw: ISanityGenericPage): IGenericPage {
 }
 
 async function getSanityGenericPage(
-  pagePath: string
+  pagePath: string,
+  locale: Locale = 'en'
 ): Promise<IGenericPage | null> {
   const normalizedPath = pagePath === '/' || pagePath === '' ? '/' : `/${pagePath.replace(/^\//, '')}`;
 
-  console.log('[Sanity] Getting page:', normalizedPath);
+  console.log('[Sanity] Getting page:', normalizedPath, '| Locale:', locale);
 
   try {
     const rawPage = await sanityFetch<ISanityGenericPage | null>({
       query: GENERIC_PAGE_BY_PATH_QUERY,
-      params: { pagePath: normalizedPath },
+      params: { pagePath: normalizedPath, locale },
       revalidate: 60,
       tags: ['genericPage'],
     });
@@ -67,5 +68,5 @@ export async function getGenericPage(
     return await mockProvider.getGenericPage(pagePath, locale);
   }
 
-  return await getSanityGenericPage(pagePath);
+  return await getSanityGenericPage(pagePath, locale);
 }

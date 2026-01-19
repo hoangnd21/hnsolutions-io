@@ -5,8 +5,8 @@ export const GENERIC_PAGE_BY_PATH_QUERY = defineQuery(`
     _id,
     _type,
     "pagePath": coalesce(pagePath.current, pagePath),
-    seoTitle,
-    seoDescription,
+    "seoTitle": coalesce(seoTitle[$locale], seoTitle.en),
+    "seoDescription": coalesce(seoDescription[$locale], seoDescription.en),
     "seoImage": seoImage.asset->url,
     generalTranslations->{
       _id,
@@ -23,18 +23,18 @@ export const GENERIC_PAGE_BY_PATH_QUERY = defineQuery(`
           _id,
           _type,
           internalName,
-          title,
+          "title": coalesce(title[$locale], title.en),
           items[]->{
             _id,
             _type,
             internalName,
-            text,
+            "text": coalesce(text[$locale], text.en),
             "href": coalesce(href.url, href.page->pagePath.current, href),
             items[]->{
               _id,
               _type,
               internalName,
-              text,
+              "text": coalesce(text[$locale], text.en),
               "href": coalesce(href.url, href.page->pagePath.current, href)
             }
           }
@@ -50,12 +50,12 @@ export const GENERIC_PAGE_BY_PATH_QUERY = defineQuery(`
             "icon": icon.asset->url
           }
         },
-        copyrightText
+        "copyrightText": coalesce(copyrightText[$locale], copyrightText.en)
       },
       _type == "HeroBlock" => {
-        title,
-        subtitle,
-        ctaText,
+        "title": coalesce(title[$locale], title.en),
+        "subtitle": coalesce(subtitle[$locale], subtitle.en),
+        "ctaText": coalesce(ctaText[$locale], ctaText.en),
         "ctaLink": coalesce(ctaLink.url, ctaLink.page->pagePath.current, ctaLink),
         metadata{
           author,
@@ -64,11 +64,11 @@ export const GENERIC_PAGE_BY_PATH_QUERY = defineQuery(`
         "backgroundImage": backgroundImage.asset->url
       },
       _type == "CalloutBlock" => {
-        headline,
-        description,
+        "headline": coalesce(headline[$locale], headline.en),
+        "description": coalesce(description[$locale], description.en),
         buttons[]{
           _key,
-          text,
+          "text": coalesce(text[$locale], text.en),
           "href": coalesce(href.url, href.page->pagePath.current, href),
           variant
         },
