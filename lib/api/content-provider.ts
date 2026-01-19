@@ -50,11 +50,17 @@ async function getSanityGenericPage(
   }
 }
 
+export interface IGetGenericPageOptions {
+  locale?: Locale;
+  useMock?: boolean;
+}
+
 export async function getGenericPage(
   pagePath: string,
-  locale: Locale = 'en'
+  options: IGetGenericPageOptions = {}
 ): Promise<IGenericPage | null> {
-  const source = process.env.CONTENT_SOURCE || 'mock';
+  const { locale = 'en', useMock = false } = options;
+  const source = useMock ? 'mock' : (process.env.CONTENT_SOURCE || 'mock');
 
   console.log('[Content] Source:', source, '| Path:', pagePath, '| Locale:', locale);
 

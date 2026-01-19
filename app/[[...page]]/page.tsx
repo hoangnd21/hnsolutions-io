@@ -6,10 +6,11 @@ import { ALL_PAGE_PATHS_QUERY } from '@/lib/sanity/queries';
 
 interface IDynamicPageProps {
   params: Promise<{ page?: string[] }>;
+  searchParams: Promise<{ mock?: string }>;
 }
 
-async function getPageData(pagePath: string) {
-  return await getGenericPage(pagePath, 'en');
+async function getPageData(pagePath: string, useMock: boolean = false) {
+  return await getGenericPage(pagePath, { locale: 'en', useMock });
 }
 
 export async function generateStaticParams() {
@@ -28,11 +29,14 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({
   params,
+  searchParams,
 }: IDynamicPageProps): Promise<Metadata> {
   const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
   const pagePath = resolvedParams.page?.join('/') || '';
+  const useMock = resolvedSearchParams.mock === 'true';
 
-  const page = await getPageData(pagePath);
+  const page = await getPageData(pagePath, useMock);
 
   if (!page) {
     return {
@@ -57,11 +61,13 @@ export async function generateMetadata({
   };
 }
 
-export default async function DynamicPage({ params }: IDynamicPageProps) {
+export default async function DynamicPage({ params, searchParams }: IDynamicPageProps) {
   const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
   const pagePath = resolvedParams.page?.join('/') || '';
+  const useMock = resolvedSearchParams.mock === 'true';
 
-  const page = await getPageData(pagePath);
+  const page = await getPageData(pagePath, useMock);
 
   if (!page) {
     notFound();

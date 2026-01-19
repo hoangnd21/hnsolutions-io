@@ -773,6 +773,9 @@ export async function getGenericPage(
     const testimonials = await getTestimonials(locale);
 
     return {
+      _id: 'mock-home-page',
+      _type: 'genericPage',
+      internalName: 'Home Page',
       pagePath: '/',
       seoTitle: 'HNSolutions - IT Development & Digital Marketing Services',
       seoDescription: 'Professional IT development and digital marketing services. Build powerful websites, run effective campaigns, and optimize your digital presence.',
@@ -788,8 +791,9 @@ export async function getGenericPage(
       },
       blocks: [
         {
-          type: 'hero',
-          id: 'home-hero',
+          _type: 'hero',
+          _id: 'home-hero',
+          internalName: 'Home Hero',
           data: {
             title: locale === 'vn' ? 'Giải Pháp Công Nghệ & Marketing Kỹ Thuật Số' : 'IT Solutions & Digital Marketing',
             subtitle: locale === 'vn' ? 'Xây dựng website mạnh mẽ, chạy chiến dịch hiệu quả và tối ưu hóa sự hiện diện kỹ thuật số của bạn.' : 'Build powerful websites, run effective campaigns, and optimize your digital presence.',
@@ -798,8 +802,9 @@ export async function getGenericPage(
           },
         },
         {
-          type: 'services',
-          id: 'home-services',
+          _type: 'services',
+          _id: 'home-services',
+          internalName: 'Home Services',
           data: {
             services,
             title: locale === 'vn' ? 'Dịch Vụ Của Chúng Tôi' : 'Our Services',
@@ -807,8 +812,9 @@ export async function getGenericPage(
           },
         },
         {
-          type: 'testimonials',
-          id: 'home-testimonials',
+          _type: 'testimonials',
+          _id: 'home-testimonials',
+          internalName: 'Home Testimonials',
           data: {
             testimonials,
             title: locale === 'vn' ? 'Khách Hàng Nói Gì' : 'What Our Clients Say',
@@ -823,6 +829,9 @@ export async function getGenericPage(
     const services = await getServices(locale);
 
     return {
+      _id: 'mock-services-page',
+      _type: 'genericPage',
+      internalName: 'Services Page',
       pagePath: '/services',
       seoTitle: 'Our Services - HNSolutions',
       seoDescription: 'Explore our comprehensive IT development and digital marketing services.',
@@ -834,24 +843,27 @@ export async function getGenericPage(
       },
       blocks: [
         {
-          type: 'hero',
-          id: 'services-hero',
+          _type: 'hero',
+          _id: 'services-hero',
+          internalName: 'Services Hero',
           data: {
             title: locale === 'vn' ? 'Dịch Vụ' : 'Our Services',
             subtitle: locale === 'vn' ? 'Giải pháp toàn diện phù hợp với nhu cầu kinh doanh của bạn' : 'Comprehensive solutions tailored to your business needs',
           },
         },
         {
-          type: 'services',
-          id: 'services-grid',
+          _type: 'services',
+          _id: 'services-grid',
+          internalName: 'Services Grid',
           data: {
             services,
             layout: 'grid',
           },
         },
         {
-          type: 'cta',
-          id: 'services-cta',
+          _type: 'cta',
+          _id: 'services-cta',
+          internalName: 'Services CTA',
           data: {
             title: locale === 'vn' ? 'Hãy Xây Dựng Điều Gì Đó Tuyệt Vời Cùng Nhau' : "Let's Build Something Amazing Together",
             description: locale === 'vn' ? 'Sẵn sàng đưa doanh nghiệp của bạn lên tầm cao mới? Liên hệ với chúng tôi ngay hôm nay.' : 'Ready to take your business to the next level? Contact us today.',
@@ -867,6 +879,9 @@ export async function getGenericPage(
     const portfolioItems = await getPortfolioItems(locale);
 
     return {
+      _id: 'mock-portfolio-page',
+      _type: 'genericPage',
+      internalName: 'Portfolio Page',
       pagePath: '/portfolio',
       seoTitle: 'Portfolio - HNSolutions',
       seoDescription: 'View our portfolio of successful projects and case studies.',
@@ -877,16 +892,18 @@ export async function getGenericPage(
       },
       blocks: [
         {
-          type: 'hero',
-          id: 'portfolio-hero',
+          _type: 'hero',
+          _id: 'portfolio-hero',
+          internalName: 'Portfolio Hero',
           data: {
             title: locale === 'vn' ? 'Portfolio' : 'Portfolio',
             subtitle: locale === 'vn' ? 'Xem danh mục các dự án thành công và nghiên cứu điển hình của chúng tôi' : 'View our portfolio of successful projects and case studies',
           },
         },
         {
-          type: 'portfolio',
-          id: 'portfolio-grid',
+          _type: 'portfolio',
+          _id: 'portfolio-grid',
+          internalName: 'Portfolio Grid',
           data: {
             items: portfolioItems,
           },
@@ -899,6 +916,9 @@ export async function getGenericPage(
     const blogPosts = await getBlogPosts(locale);
 
     return {
+      _id: 'mock-blog-page',
+      _type: 'genericPage',
+      internalName: 'Blog Page',
       pagePath: '/blog',
       seoTitle: 'Blog - HNSolutions',
       seoDescription: 'Insights, tips, and news about IT development and digital marketing.',
@@ -909,16 +929,18 @@ export async function getGenericPage(
       },
       blocks: [
         {
-          type: 'hero',
-          id: 'blog-hero',
+          _type: 'hero',
+          _id: 'blog-hero',
+          internalName: 'Blog Hero',
           data: {
             title: locale === 'vn' ? 'Blog' : 'Blog',
             subtitle: locale === 'vn' ? 'Thông tin chi tiết, mẹo và tin tức về phát triển IT và marketing kỹ thuật số' : 'Insights, tips, and trends in IT and digital marketing',
           },
         },
         {
-          type: 'blog-list',
-          id: 'blog-list',
+          _type: 'blog-list',
+          _id: 'blog-list',
+          internalName: 'Blog List',
           data: {
             posts: blogPosts,
           },
@@ -936,6 +958,9 @@ export async function getGenericPage(
     }
 
     return {
+      _id: `mock-blog-post-${slug}`,
+      _type: 'genericPage',
+      internalName: `Blog Post: ${post.title}`,
       pagePath: `/blog/${slug}`,
       seoTitle: `${post.title} - HNSolutions`,
       seoDescription: post.excerpt,
@@ -947,8 +972,9 @@ export async function getGenericPage(
       },
       blocks: [
         {
-          type: 'hero',
-          id: 'blog-post-hero',
+          _type: 'hero',
+          _id: 'blog-post-hero',
+          internalName: 'Blog Post Hero',
           data: {
             title: post.title,
             subtitle: post.excerpt,
@@ -959,8 +985,9 @@ export async function getGenericPage(
           },
         },
         {
-          type: 'blog-post',
-          id: 'blog-post-content',
+          _type: 'blog-post',
+          _id: 'blog-post-content',
+          internalName: 'Blog Post Content',
           data: {
             post,
           },
@@ -973,6 +1000,9 @@ export async function getGenericPage(
     const teamMembers = await getTeamMembers(locale);
 
     return {
+      _id: 'mock-about-page',
+      _type: 'genericPage',
+      internalName: 'About Page',
       pagePath: '/about',
       seoTitle: 'About Us - HNSolutions',
       seoDescription: 'Meet our team of experts in IT development and digital marketing.',
@@ -983,16 +1013,18 @@ export async function getGenericPage(
       },
       blocks: [
         {
-          type: 'hero',
-          id: 'about-hero',
+          _type: 'hero',
+          _id: 'about-hero',
+          internalName: 'About Hero',
           data: {
             title: locale === 'vn' ? 'Về Chúng Tôi' : 'About Us',
             subtitle: locale === 'vn' ? 'Gặp gỡ đội ngũ chuyên gia của chúng tôi về phát triển IT và marketing kỹ thuật số' : 'Meet our team of experts in IT development and digital marketing',
           },
         },
         {
-          type: 'team',
-          id: 'team-grid',
+          _type: 'team',
+          _id: 'team-grid',
+          internalName: 'Team Grid',
           data: {
             members: teamMembers,
           },
@@ -1003,6 +1035,9 @@ export async function getGenericPage(
 
   if (normalizedPath === 'contact') {
     return {
+      _id: 'mock-contact-page',
+      _type: 'genericPage',
+      internalName: 'Contact Page',
       pagePath: '/contact',
       seoTitle: 'Contact Us - HNSolutions',
       seoDescription: 'Get in touch with us for your IT development and digital marketing needs.',
@@ -1013,16 +1048,18 @@ export async function getGenericPage(
       },
       blocks: [
         {
-          type: 'hero',
-          id: 'contact-hero',
+          _type: 'hero',
+          _id: 'contact-hero',
+          internalName: 'Contact Hero',
           data: {
             title: locale === 'vn' ? 'Liên Hệ' : 'Contact Us',
             subtitle: locale === 'vn' ? 'Liên hệ với chúng tôi cho nhu cầu phát triển IT và marketing kỹ thuật số của bạn' : 'Get in touch with us for your IT development and digital marketing needs',
           },
         },
         {
-          type: 'contact-form',
-          id: 'contact-form',
+          _type: 'contact-form',
+          _id: 'contact-form',
+          internalName: 'Contact Form',
           data: {},
         },
       ],
