@@ -3,15 +3,23 @@
 // ============================================================================
 // Sanity Base Types
 // ============================================================================
-export type DynamicComponentProps = Record<string, unknown>;
-export interface ISanityDocument {
+
+// Allows any additional properties beyond specified fields
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type DynamicComponentProps = Record<string, any>;
+
+// Base Sanity document fields
+interface ISanityDocumentBase {
   _id: string;
   _type: string;
   _createdAt?: string;
   _updatedAt?: string;
   _rev?: string;
-  data: DynamicComponentProps;
 }
+
+// Sanity document with known fields + any extras
+export type ISanityDocument = ISanityDocumentBase & DynamicComponentProps;
+
 
 export interface ISanityReference {
   _ref: string;
