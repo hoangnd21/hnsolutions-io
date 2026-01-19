@@ -11,13 +11,9 @@ interface IImageGalleryBlockProps {
     }[];
     title?: string;
   };
-  translations: Record<string, string>;
 }
 
-export function ImageGalleryBlock({
-  data,
-  translations,
-}: IImageGalleryBlockProps) {
+export function ImageGalleryBlock({ data }: IImageGalleryBlockProps) {
   const { images, title } = data;
 
   return (

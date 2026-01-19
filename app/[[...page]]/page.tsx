@@ -3,10 +3,11 @@ import { Metadata } from 'next';
 import { getGenericPage } from '@/lib/api/content-provider';
 import { sanityFetch } from '@/lib/sanity/fetch';
 import { ALL_PAGE_PATHS_QUERY } from '@/lib/sanity/queries';
+import { BlockRenderer } from '@/components/blocks/BlockRenderer';
 
 interface IDynamicPageProps {
   params: Promise<{ page?: string[] }>;
-  searchParams: Promise<{ mock?: string }>;
+  searchParams: Promise<{ mock?: string; debug?: string }>;
 }
 
 async function getPageData(pagePath: string, useMock: boolean = false) {
@@ -66,6 +67,7 @@ export default async function DynamicPage({ params, searchParams }: IDynamicPage
   const resolvedSearchParams = await searchParams;
   const pagePath = resolvedParams.page?.join('/') || '';
   const useMock = resolvedSearchParams.mock === 'true';
+  const showDebug = resolvedSearchParams.debug === 'true';
 
   const page = await getPageData(pagePath, useMock);
 
@@ -74,11 +76,16 @@ export default async function DynamicPage({ params, searchParams }: IDynamicPage
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-mono text-gray-400 mb-4">Page Data (Debug)</h1>
-      <pre className="bg-transparent border border-gray-700 p-6 rounded-lg overflow-auto text-sm text-gray-400 font-mono leading-relaxed">
-        {JSON.stringify(page, null, 2)}
-      </pre>
-    </div>
+    <>
+      {showDebug && (
+        <div className="container mx-auto px-4 py-8 border-b border-gray-700">
+          <h1 className="text-2xl font-mono text-gray-400 mb-4">Page Data (Debug)</h1>
+          <pre className="bg-transparent border border-gray-700 p-6 rounded-lg overflow-auto text-sm text-gray-400 font-mono leading-relaxed max-h-96">
+            {JSON.stringify(page, null, 2)}
+          </pre>
+        </div>
+      )}
+      <BlockRenderer blocks={page.blocks} translations={page.generalTranslations} />
+    </>
   );
 }
