@@ -11,6 +11,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ProgressBar } from "@/components/progress/ProgressBar";
 import { FontSwitcher } from "@/components/ui/FontSwitcher";
+import { MenuProvider } from "@/lib/menu-context";
 import { cookies } from "next/headers";
 import Script from "next/script";
 
@@ -45,13 +46,15 @@ export default async function RootLayout({
           enableSystem
           enableColorScheme
         >
-          <ProgressBar />
-          <FontSwitcher />
-          <div className="flex min-h-screen flex-col">
-            <Header dict={dict} />
-            <main className="flex-1">{children}</main>
-            <Footer dict={dict} />
-          </div>
+          <MenuProvider>
+            <ProgressBar />
+            <FontSwitcher />
+            <div className="flex min-h-screen flex-col">
+              <Header dict={dict} />
+              <main className="flex-1">{children}</main>
+              <Footer dict={dict} />
+            </div>
+          </MenuProvider>
         </ThemeProvider>
         
         {/* AOS (Animate On Scroll) initialization */}

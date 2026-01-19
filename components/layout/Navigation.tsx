@@ -5,6 +5,7 @@ import { IDictionary, IHeaderItem } from '@/types';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { LanguageSwitcher } from '../ui/LanguageSwitcher';
+import { useMenu } from '@/lib/menu-context';
 
 interface INavigationProps {
   dict: IDictionary;
@@ -14,8 +15,9 @@ export function Navigation({ dict }: INavigationProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [expandedMobileItems, setExpandedMobileItems] = useState<string[]>([]);
   const [hoveredDesktopItem, setHoveredDesktopItem] = useState<string | null>(null);
+  const { menuItems: cmsMenuItems } = useMenu();
 
-  const navItems: IHeaderItem[] = [
+  const defaultNavItems: IHeaderItem[] = [
     { href: '/', text: dict.nav.home },
     { 
       href: '/about',
@@ -37,6 +39,8 @@ export function Navigation({ dict }: INavigationProps) {
     { href: '/blog', text: dict.nav.blog },
     { href: '/contact', text: dict.nav.contact }
   ];
+
+  const navItems = cmsMenuItems.length > 0 ? cmsMenuItems : defaultNavItems;
 
   const toggleMobileItem = (text: string) => {
     setExpandedMobileItems(prev => 

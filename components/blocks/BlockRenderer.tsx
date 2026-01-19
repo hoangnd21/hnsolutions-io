@@ -10,6 +10,7 @@ import { ContactFormBlock } from './ContactFormBlock';
 import { TextContentBlock } from './TextContentBlock';
 import { ImageGalleryBlock } from './ImageGalleryBlock';
 import { CTABlock } from './CTABlock';
+import { MenuBlock } from './MenuBlock';
 
 interface IBlockRendererProps {
   blocks: IBlock[];
@@ -28,6 +29,8 @@ const blockComponents: Record<string, React.ComponentType<any>> = {
   'text-content': TextContentBlock,
   'image-gallery': ImageGalleryBlock,
   cta: CTABlock,
+  MenuBlock: MenuBlock,
+  menuBlock: MenuBlock,
 };
 
 export async function BlockRenderer({
@@ -45,7 +48,7 @@ export async function BlockRenderer({
         return (
           <Component
             key={block._id || index}
-            data={block.data}
+            data={block}
             translations={translations}
           />
         );
