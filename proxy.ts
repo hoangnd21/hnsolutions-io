@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { defaultLocale } from '@/i18n/locales';
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   // Check if locale cookie exists
   const localeCookie = request.cookies.get('NEXT_LOCALE');
 

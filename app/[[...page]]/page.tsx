@@ -59,8 +59,8 @@ export default async function DynamicPage({ params }: IDynamicPageProps) {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Page Data (Debug)</h1>
-      <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-auto text-sm">
+      <h1 className="text-2xl font-mono text-gray-400 mb-4">Page Data (Debug)</h1>
+      <pre className="bg-transparent border border-gray-700 p-6 rounded-lg overflow-auto text-sm text-gray-400 font-mono leading-relaxed">
         {JSON.stringify(page, null, 2)}
       </pre>
     </div>

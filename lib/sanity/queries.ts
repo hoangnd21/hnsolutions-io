@@ -1,6 +1,6 @@
-import { defineQuery } from '@sanity/client';
+import { defineQuery } from 'next-sanity';
 
-export const GENERIC_PAGE_BY_PATH_QUERY = defineQuery(/* groq */ `
+export const GENERIC_PAGE_BY_PATH_QUERY = defineQuery(`
   *[_type == "genericPage" && pagePath == $pagePath][0]{
     _id,
     _type,

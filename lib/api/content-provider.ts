@@ -27,18 +27,27 @@ async function getSanityGenericPage(
 ): Promise<IGenericPage | null> {
   const normalizedPath = pagePath === '/' || pagePath === '' ? '/' : `/${pagePath.replace(/^\//, '')}`;
 
-  const rawPage = await sanityFetch<ISanityGenericPage | null>({
-    query: GENERIC_PAGE_BY_PATH_QUERY,
-    params: { pagePath: normalizedPath },
-    revalidate: 60,
-    tags: ['genericPage'],
-  });
+  console.log('[Sanity] Getting page:', normalizedPath);
 
-  if (!rawPage) {
+  try {
+    const rawPage = await sanityFetch<ISanityGenericPage | null>({
+      query: GENERIC_PAGE_BY_PATH_QUERY,
+      params: { pagePath: normalizedPath },
+      revalidate: 60,
+      tags: ['genericPage'],
+    });
+
+    if (!rawPage) {
+      console.log('[Sanity] Page not found:', normalizedPath);
+      return null;
+    }
+
+    console.log('[Sanity] Page found:', rawPage.internalName);
+    return transformGenericPage(rawPage);
+  } catch (e) {
+    console.error('[Sanity] getPageBySlug error:', e);
     return null;
   }
-
-  return transformGenericPage(rawPage);
 }
 
 export async function getGenericPage(
@@ -46,6 +55,8 @@ export async function getGenericPage(
   locale: Locale = 'en'
 ): Promise<IGenericPage | null> {
   const source = process.env.CONTENT_SOURCE || 'mock';
+
+  console.log('[Content] Source:', source, '| Path:', pagePath, '| Locale:', locale);
 
   if (source === 'sanity') {
     return await getSanityGenericPage(pagePath);
