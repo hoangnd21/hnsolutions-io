@@ -37,14 +37,14 @@ export async function BlockRenderer({
   return (
     <>
       {blocks.map((block, index) => {
-        const Component = blockComponents[block.type];
+        const Component = blockComponents[block._type];
         if (!Component) {
-          console.warn(`Unknown block type: ${block.type}`);
+          console.warn(`Unknown block type: ${block._type}`);
           return null;
         }
         return (
           <Component
-            key={block.id || index}
+            key={block._id || index}
             data={block.data}
             translations={translations}
           />

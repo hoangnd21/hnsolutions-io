@@ -3,13 +3,16 @@
 // ============================================================================
 // Sanity Base Types
 // ============================================================================
-
+export type DynamicComponentProps = {
+  [key: string]: (() => void) | string | number | boolean | undefined | null | React.ReactNode | DynamicComponentProps;
+};
 export interface ISanityDocument {
   _id: string;
   _type: string;
   _createdAt?: string;
   _updatedAt?: string;
   _rev?: string;
+  data: DynamicComponentProps;
 }
 
 export interface ISanityReference {
