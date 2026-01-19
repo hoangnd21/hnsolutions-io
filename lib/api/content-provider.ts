@@ -60,13 +60,12 @@ export async function getGenericPage(
   options: IGetGenericPageOptions = {}
 ): Promise<IGenericPage | null> {
   const { locale = 'en', useMock = false } = options;
-  const source = useMock ? 'mock' : (process.env.CONTENT_SOURCE || 'mock');
 
-  console.log('[Content] Source:', source, '| Path:', pagePath, '| Locale:', locale);
+  console.log('[Content] Source:', useMock ? 'mock' : 'sanity', '| Path:', pagePath, '| Locale:', locale);
 
-  if (source === 'sanity') {
-    return await getSanityGenericPage(pagePath);
+  if (useMock) {
+    return await mockProvider.getGenericPage(pagePath, locale);
   }
 
-  return await mockProvider.getGenericPage(pagePath, locale);
+  return await getSanityGenericPage(pagePath);
 }
